@@ -1,0 +1,23 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: morosidad-service
+
+  datasource:
+    url: jdbc:postgresql://ep-fancy-pine-ape3ckzr-pooler.c-7.us-east-1.aws.neon.tech/apr_morosidad_db?sslmode=require&channel_binding=require
+    username: neondb_owner
+    password: npg_uCW4DQhOL5vG
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    prefer-ip-address: true
