@@ -1,1 +1,2 @@
-# Autenticacion
+Morosidad-Service (puerto 8085, apr_morosidad_db)
+Responsabilidad: Registrar y gestionar morosos. Permite autorizar corte de servicio (CORTE_AUTORIZADO). Entidad: Moroso { id, socioId, mesesDeuda, montoTotalDeuda, estado: EstadoMoroso, fechaDeteccion, fechaCorte } Controller: MorosidadController — GET con filtros (socioId, estado), POST, PUT, DELETE Service: MorosidadService — listarTodos(), buscarPorSocioId(), buscarPorEstado(), guardar(), actualizar(), eliminar(), validarSocioEnSocioService() Repository: MorosoRepository — custom: findBySocioId(), findByEstado() DTOs: MorosoDTO, MorosoResponseDTO Dependencias externas: Socio-Service → GET /socios/{id} Tabla BD: morosos
