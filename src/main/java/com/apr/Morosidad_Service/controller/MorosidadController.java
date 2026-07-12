@@ -83,6 +83,22 @@ public class MorosidadController {
         return ResponseEntity.ok(service.actualizar(id, dto));
     }
 
+    @PostMapping("/detectar")
+    @Operation(summary = "Detección automática de morosidad", description = "Ejecuta un proceso que consulta facturas impagas y registra deudores en morosidad automáticamente.")
+    @ApiResponse(responseCode = "200", description = "Proceso ejecutado con éxito.")
+    public ResponseEntity<java.util.Map<String, Object>> detectar() {
+        return ResponseEntity.ok(service.detectarMorosos());
+    }
+
+    @PostMapping("/{id}/recordatorio")
+    @Operation(summary = "Enviar recordatorio de corte", description = "Genera un recordatorio simulado previo al corte para un socio en mora.")
+    @ApiResponse(responseCode = "200", description = "Recordatorio generado correctamente.")
+    @ApiResponse(responseCode = "404", description = "No existe el registro de morosidad.")
+    public ResponseEntity<java.util.Map<String, Object>> recordatorio(
+            @Parameter(description = "ID del registro de morosidad", required = true) @PathVariable Long id) {
+        return ResponseEntity.ok(service.notificarRecordatorio(id));
+    }
+
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar registro de moroso", description = "Borra el registro de morosidad del sistema.")
     @ApiResponse(responseCode = "204", description = "Registro eliminado con éxito.")
