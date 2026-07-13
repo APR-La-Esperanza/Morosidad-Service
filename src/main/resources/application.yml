@@ -27,3 +27,9 @@ eureka:
       defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
   instance:
     prefer-ip-address: true
+
+service:
+  socio:
+    url: ${SERVICE_SOCIO_URL:http://socio-service}
+  facturacion:
+    url: ${SERVICE_FACTURACION_URL:http://facturacion-service}

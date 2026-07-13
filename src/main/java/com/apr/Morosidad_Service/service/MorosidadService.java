@@ -20,11 +20,13 @@ import java.util.Map;
 public class MorosidadService {
 
     private final MorosoRepository repository;
-    private final WebClient.Builder webClientBuilder;
+    private final WebClient socioWebClient;
+    private final WebClient facturacionWebClient;
 
-    public MorosidadService(MorosoRepository repository, WebClient.Builder webClientBuilder) {
+    public MorosidadService(MorosoRepository repository, WebClient socioWebClient, WebClient facturacionWebClient) {
         this.repository = repository;
-        this.webClientBuilder = webClientBuilder;
+        this.socioWebClient = socioWebClient;
+        this.facturacionWebClient = facturacionWebClient;
     }
 
     public List<MorosoResponseDTO> listarTodos() {
@@ -87,8 +89,8 @@ public class MorosidadService {
         int registrosCreados = 0;
         try {
             // Obtener todas las facturas en estado PENDIENTE o VENCIDA de Facturacion-Service
-            List<Map> facturas = webClientBuilder.build().get()
-                    .uri("http://facturacion-service/facturas")
+            List<Map> facturas = facturacionWebClient.get()
+                    .uri("/facturas")
                     .retrieve()
                     .bodyToFlux(Map.class)
                     .collectList()
@@ -171,8 +173,8 @@ public class MorosidadService {
 
     private void validarSocioEnSocioService(Long socioId) {
         try {
-            Boolean existe = webClientBuilder.build().get()
-                    .uri("http://socio-service/socios/" + socioId)
+            Boolean existe = socioWebClient.get()
+                    .uri("/socios/" + socioId)
                     .retrieve()
                     .toBodilessEntity()
                     .map(response -> response.getStatusCode().is2xxSuccessful())
